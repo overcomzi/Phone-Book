@@ -8,8 +8,8 @@ import java.util.Scanner;
 //TODO: Многопоточность - определение времени выполнения сортировки параллельно
 public class Main {
     // На ресурсе hyperskill можно использовать лишь абсолютные пути
-    private static String phonesPath = "D:\\Files\\Projects\\Buffer\\Java\\Phone Book\\directory.txt",
-    targetPath = "D:\\Files\\Projects\\Buffer\\Java\\Phone Book\\find.txt";
+    private static String phonesPath = "shortDirectory.txt",
+    targetPath = "shortFind.txtq";
 
     public static void main(String[] args) {
         try {
