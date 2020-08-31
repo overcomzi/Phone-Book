@@ -7,8 +7,8 @@ import java.util.Scanner;
 //TODO: Разбить сортировку на части, константы под пути, оформить общие методы
 //TODO: Многопоточность - определение времени выполнения сортировки параллельно
 public class Main {
-    private static String phonesPath = "directory.txt",
-                          targetPath = "find.txt";
+    private static final String phonesPath = "directory.txt",
+                                 targetPath = "find.txt";
 
     public static void main(String[] args) {
         try {
@@ -17,9 +17,7 @@ public class Main {
 
             SearchContext searchContext = new SearchContext();
             searchContext.setSearchAlgorithm(new LinearSearch(phones));
-
             SortContext sortContext = new SortContext();
-
 
             System.out.println("Start searching (linear search)");
             long startTime = System.currentTimeMillis();
@@ -31,10 +29,10 @@ public class Main {
             long linearTimeTaken = endTime - startTime;
 
             String timeTaken = formatTime(linearTimeTaken);
-            String output = String.format("Found %d / %d entries. Time taken: %s",
+            System.out.printf("Found %d / %d entries. Time taken: %s\n",
                     foundQty, targetQty, timeTaken);
-            System.out.println(output);
             //------------------------------------------------------------
+
             List<Phone> srcPhone = copyPhones(phones);
             searchContext.setSearchAlgorithm(new JumpSearch(srcPhone));
             sortContext.setSort(new BubbleSort());
@@ -53,22 +51,23 @@ public class Main {
                 foundPhones = searchContext.startSearch(targets);
             }
             endTime = System.currentTimeMillis();
-            long searchingTime = endTime - startTime;
 
+            long searchingTime = endTime - startTime;
             foundQty = foundPhones.size();
             timeTaken = formatTime(searchingTime + sortingTime);
-            output = String.format("Found %d / %d entries. Time taken: %s",
+
+            System.out.printf("Found %d / %d entries. Time taken: %s\n",
                     foundQty, targetQty, timeTaken);
-            System.out.println(output);
 
-            output = String.format("Sorting time: %s", formatTime(sortingTime));
+            String output = String.format("Sorting time: %s", formatTime(sortingTime));
             if (isStopBubbleSort) {
-                System.out.println(output + " - STOPPED, moved to linear search");
+                output +=  " - STOPPED, moved to linear search";
             }
-
-            output = String.format("Searching time: %s", formatTime(searchingTime));
             System.out.println(output);
+
+            System.out.printf("Searching time: %s\n", formatTime(searchingTime));
             //----------------------------------------------------
+
             srcPhone = copyPhones(phones);
             searchContext.setSearchAlgorithm(new BinarySearch(srcPhone));
             sortContext.setSort(new QuickSort());
@@ -79,23 +78,17 @@ public class Main {
             endTime = System.currentTimeMillis();
 
             sortingTime = endTime - startTime;
-
             startTime = System.currentTimeMillis();
             foundPhones = searchContext.startSearch(targets);
             endTime = System.currentTimeMillis();
             searchingTime = endTime - startTime;
-
             foundQty = foundPhones.size();
             timeTaken = formatTime(searchingTime + sortingTime);
-            output = String.format("Found %d / %d entries. Time taken: %s",
+
+            System.out.printf("Found %d / %d entries. Time taken: %s\n",
                     foundQty, targetQty, timeTaken);
-            System.out.println(output);
-
-            output = String.format("Sorting time: %s", formatTime(sortingTime));
-            System.out.println(output);
-
-            output = String.format("Searching time: %s", formatTime(searchingTime));
-            System.out.println(output);
+            System.out.printf("Sorting time: %s\n", formatTime(sortingTime));
+            System.out.printf("Searching time: %s\n", formatTime(searchingTime));
             //----------------------------------------------------
 
             srcPhone = copyPhones(phones);
@@ -103,27 +96,21 @@ public class Main {
             startTime = System.currentTimeMillis();
             searchContext.setSearchAlgorithm(new HashSearch(srcPhone));
             endTime = System.currentTimeMillis();
-            long creatingTime = endTime - startTime;
 
+            long creatingTime = endTime - startTime;
             startTime = System.currentTimeMillis();
             foundPhones = searchContext.startSearch(targets);
             endTime = System.currentTimeMillis();
             searchingTime = endTime - startTime;
-
             foundQty = foundPhones.size();
             timeTaken = formatTime(searchingTime + creatingTime);
-            output = String.format("Found %d / %d entries. Time taken: %s",
+
+            System.out.printf("Found %d / %d entries. Time taken: %s\n",
                     foundQty, targetQty, timeTaken);
-            System.out.println(output);
 
-            output = String.format("Creating time: %s", formatTime(creatingTime));
-            System.out.println(output);
-
-            output = String.format("Searching time: %s", formatTime(searchingTime));
-            System.out.println(output);
+            System.out.printf("Creating time: %s\n", formatTime(creatingTime));
+            System.out.printf("Searching time: %s\n", formatTime(searchingTime));
             //----------------------------------------------------
-
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
