@@ -39,7 +39,7 @@ public class Main {
                     foundQty, targetQty, timeTaken);
             //------------------------------------------------------------
 
-            List<Phone> srcPhone = copyPhones(phones);
+            List<Phone> srcPhone = new ArrayList<>(phones);
             searchContext.setSearchAlgorithm(new JumpSearch(srcPhone));
             sortContext.setSort(new BubbleSort());
 
@@ -72,7 +72,7 @@ public class Main {
             System.out.printf("Searching time: %s\n", formatTime(searchingTime));
             //----------------------------------------------------
 
-            srcPhone = copyPhones(phones);
+            srcPhone = new ArrayList<>(phones);
             searchContext.setSearchAlgorithm(new BinarySearch(srcPhone));
             sortContext.setSort(new QuickSort());
 
@@ -95,7 +95,7 @@ public class Main {
             System.out.printf("Searching time: %s\n", formatTime(searchingTime));
             //----------------------------------------------------
 
-            srcPhone = copyPhones(phones);
+            srcPhone = new ArrayList<>(phones);
             System.out.println("Start searching (hash table)");
             startTime = System.currentTimeMillis();
             searchContext.setSearchAlgorithm(new HashSearch(srcPhone));
@@ -119,16 +119,6 @@ public class Main {
             System.out.println(e.getMessage());
         }
     }
-
-    public static List<Phone> copyPhones(List<Phone> phones) {
-        List<Phone> copied = new ArrayList<>(phones.size());
-        for (Phone phone : phones) {
-            Phone newPhone = new Phone(phone);
-            copied.add(newPhone);
-        }
-        return copied;
-    }
-
 
     public static String formatTime(long mills) {
         long minutes = ((mills / 1000) / 60) % 60;
