@@ -18,23 +18,26 @@ public class Main {
 
             SearchContext searchContext = new SearchContext();
             searchContext.setSearchAlgorithm(new LinearSearch(phones));
+
             System.out.println("Start searching (linear search)");
             long startTime = System.currentTimeMillis();
             List<Phone> foundPhones = searchContext.startSearch(targets);
             long endTime = System.currentTimeMillis();
+
             long targetQty = targets.size();
             long foundQty = foundPhones.size();
-            String timeTaken = formatTime(endTime - startTime);
+            long linearTimeTaken = endTime - startTime;
+            String timeTaken = formatTime(linearTimeTaken);
             String output = String.format("Found %d / %d entries. Time taken: %s",
                     foundQty, targetQty, timeTaken);
             System.out.println(output);
-            long linearTimeTaker = endTime - startTime;
             //------------------------------------------------------------
             List<Phone> srcPhone = copyPhones(phones);
             searchContext.setSearchAlgorithm(new JumpSearch(srcPhone));
+
             System.out.println("Start searching (bubble sort + jump search)");
             startTime = System.currentTimeMillis();
-            boolean isStopBubbleSort = bubbleSort(srcPhone, linearTimeTaker);
+            boolean isStopBubbleSort = bubbleSort(srcPhone, linearTimeTaken);
             endTime = System.currentTimeMillis();
             long sortingTime = endTime - startTime;
 
