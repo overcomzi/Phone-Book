@@ -6,14 +6,14 @@ import user.Phone;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//TODO: Разбить сортировку на части, константы под пути, оформить общие методы
 //TODO: Многопоточность - определение времени выполнения сортировки параллельно
 public class Main {
-    private static final String phonesPath = "shortDirectory.txt";
+    private static final String phonesPath = "directory.txt";
     private static final String targetPath = "find.txt";
 
     public static void main(String[] args) {
@@ -121,9 +121,10 @@ public class Main {
     }
 
     public static String formatTime(long mills) {
-        long minutes = ((mills / 1000) / 60) % 60;
-        long secs = (mills / 1000) % 60;
-        long ms = mills % 1000;
+        Duration duration = Duration.ofMillis(mills);
+        long minutes = duration.toMinutes();
+        long secs = duration.minusMinutes(minutes).toSeconds();
+        long ms = duration.minusMinutes(minutes).minusSeconds(secs).toMillis();
         return String.format("%d min. %d sec. %d ms.", minutes, secs, ms);
     }
 
