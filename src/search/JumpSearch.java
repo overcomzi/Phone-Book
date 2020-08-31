@@ -25,7 +25,6 @@ public class JumpSearch extends SearchAlgorithm {
     }
 
     public Phone findOne(String target) {
-        //TODO: Проверить - отсортированы ли phones
         int blockSize = (int) Math.sqrt(phones.size());
         int right = 0, left = 0;
 

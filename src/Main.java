@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//TODO: Многопоточность - определение времени выполнения сортировки параллельно
 public class Main {
     private static final String phonesPath = "directory.txt";
     private static final String targetPath = "find.txt";
@@ -62,13 +61,11 @@ public class Main {
 
             System.out.printf("Found %d / %d entries. Time taken: %s\n",
                     foundQty, targetQty, timeTaken);
-
             String output = String.format("Sorting time: %s", formatTime(sortingTime));
             if (isStopBubbleSort) {
                 output += " - STOPPED, moved to linear search";
             }
             System.out.println(output);
-
             System.out.printf("Searching time: %s\n", formatTime(searchingTime));
             //----------------------------------------------------
 
@@ -82,13 +79,14 @@ public class Main {
             endTime = System.currentTimeMillis();
 
             sortingTime = endTime - startTime;
+
             startTime = System.currentTimeMillis();
             foundPhones = searchContext.startSearch(targets);
             endTime = System.currentTimeMillis();
+
             searchingTime = endTime - startTime;
             foundQty = foundPhones.size();
             timeTaken = formatTime(searchingTime + sortingTime);
-
             System.out.printf("Found %d / %d entries. Time taken: %s\n",
                     foundQty, targetQty, timeTaken);
             System.out.printf("Sorting time: %s\n", formatTime(sortingTime));
@@ -102,16 +100,16 @@ public class Main {
             endTime = System.currentTimeMillis();
 
             long creatingTime = endTime - startTime;
+
             startTime = System.currentTimeMillis();
             foundPhones = searchContext.startSearch(targets);
             endTime = System.currentTimeMillis();
+
             searchingTime = endTime - startTime;
             foundQty = foundPhones.size();
             timeTaken = formatTime(searchingTime + creatingTime);
-
             System.out.printf("Found %d / %d entries. Time taken: %s\n",
                     foundQty, targetQty, timeTaken);
-
             System.out.printf("Creating time: %s\n", formatTime(creatingTime));
             System.out.printf("Searching time: %s\n", formatTime(searchingTime));
             //----------------------------------------------------
