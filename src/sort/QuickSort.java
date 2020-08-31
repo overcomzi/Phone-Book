@@ -1,3 +1,7 @@
+package sort;
+
+import user.Phone;
+
 import java.util.List;
 
 public class QuickSort extends SortAlgorithm {
@@ -8,7 +12,7 @@ public class QuickSort extends SortAlgorithm {
 
     @Override
     public boolean sort(List<Phone> source, long duration) {
-        isWithoutDuration = duration > -1 ? false : true;
+        isWithoutDuration = duration <= -1;
         this.duration = duration;
         this.startTime = System.currentTimeMillis();
         quickSort(source, 0, source.size() - 1);

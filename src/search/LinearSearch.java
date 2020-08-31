@@ -1,3 +1,7 @@
+package search;
+
+import user.Phone;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +15,9 @@ public class LinearSearch extends SearchAlgorithm {
     @Override
     public List<Phone> search(List<String> targets) {
         List<Phone> found = new ArrayList<>();
-        for(String curTargt: targets) {
+        for (String curTargt : targets) {
             Phone foundPhone = findOne(curTargt);
-            if (foundPhone!= null) {
+            if (foundPhone != null) {
                 found.add(foundPhone);
             }
         }
@@ -21,7 +25,7 @@ public class LinearSearch extends SearchAlgorithm {
     }
 
     public Phone findOne(String target) {
-        for (Phone curPhone: phones) {
+        for (Phone curPhone : phones) {
             if (curPhone.getFullName().equalsIgnoreCase(target)) {
                 return curPhone;
             }

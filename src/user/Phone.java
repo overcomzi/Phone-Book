@@ -1,3 +1,5 @@
+package user;
+
 public class Phone {
     private String number, fullName;
 
@@ -7,8 +9,8 @@ public class Phone {
     }
 
     public Phone(Phone phone) {
-       number = phone.number;
-       fullName = phone.fullName;
+        number = phone.number;
+        fullName = phone.fullName;
     }
 
     public String getFullName() {

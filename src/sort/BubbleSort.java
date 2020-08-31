@@ -1,6 +1,10 @@
+package sort;
+
+import user.Phone;
+
 import java.util.List;
 
-public class BubbleSort extends SortAlgorithm{
+public class BubbleSort extends SortAlgorithm {
     @Override
     public boolean sort(List<Phone> source, long duration) {
         long startTime = System.currentTimeMillis();

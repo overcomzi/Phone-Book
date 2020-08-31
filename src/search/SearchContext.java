@@ -1,3 +1,7 @@
+package search;
+
+import user.Phone;
+
 import java.util.List;
 
 public class SearchContext {

@@ -1,3 +1,9 @@
+import search.*;
+import sort.BubbleSort;
+import sort.QuickSort;
+import sort.SortContext;
+import user.Phone;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -46,10 +52,8 @@ public class Main {
             startTime = System.currentTimeMillis();
             if (isStopBubbleSort) {
                 searchContext.setSearchAlgorithm(new LinearSearch(srcPhone));
-                foundPhones = searchContext.startSearch(targets);
-            } else {
-                foundPhones = searchContext.startSearch(targets);
             }
+            foundPhones = searchContext.startSearch(targets);
             endTime = System.currentTimeMillis();
 
             long searchingTime = endTime - startTime;
@@ -139,7 +143,7 @@ public class Main {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             String number = line.substring(0, line.indexOf(" "));
-            String fullName = line.substring(line.indexOf(" ") + 1, line.length());
+            String fullName = line.substring(line.indexOf(" ") + 1);
             // TODO: Валидация номера и полного имени
             Phone phone = new Phone(number, fullName);
             phones.add(phone);

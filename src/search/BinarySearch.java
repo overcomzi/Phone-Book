@@ -1,3 +1,7 @@
+package search;
+
+import user.Phone;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +26,7 @@ public class BinarySearch extends SearchAlgorithm {
 
     public Phone findOne(String target) {
         //TODO: Проверить - отсортированы ли phones
-        int left = 0, right = phones.size() -1;
+        int left = 0, right = phones.size() - 1;
         while (left <= right) {
             int mid = (left + right) / 2;
             Phone curPhone = phones.get(mid);

@@ -1,3 +1,7 @@
+package search;
+
+import user.Phone;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -7,9 +11,9 @@ public class HashSearch extends SearchAlgorithm {
 
     public HashSearch(List<Phone> phones) {
         phoneHash = new Hashtable<>(phones.size());
-       for (Phone phone: phones) {
-           phoneHash.put(phone.getFullName(), phone);
-       }
+        for (Phone phone : phones) {
+            phoneHash.put(phone.getFullName(), phone);
+        }
     }
 
     @Override
