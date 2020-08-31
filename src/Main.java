@@ -7,8 +7,8 @@ import java.util.Scanner;
 //TODO: Разбить сортировку на части, константы под пути, оформить общие методы
 //TODO: Многопоточность - определение времени выполнения сортировки параллельно
 public class Main {
-    private static final String phonesPath = "directory.txt",
-                                 targetPath = "find.txt";
+    private static final String phonesPath = "directory.txt";
+    private static final String targetPath = "find.txt";
 
     public static void main(String[] args) {
         try {
@@ -61,7 +61,7 @@ public class Main {
 
             String output = String.format("Sorting time: %s", formatTime(sortingTime));
             if (isStopBubbleSort) {
-                output +=  " - STOPPED, moved to linear search";
+                output += " - STOPPED, moved to linear search";
             }
             System.out.println(output);
 
@@ -118,7 +118,7 @@ public class Main {
 
     public static List<Phone> copyPhones(List<Phone> phones) {
         List<Phone> copied = new ArrayList<>(phones.size());
-        for (Phone phone: phones) {
+        for (Phone phone : phones) {
             Phone newPhone = new Phone(phone);
             copied.add(newPhone);
         }
