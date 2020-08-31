@@ -120,7 +120,7 @@ public class Main {
         }
     }
 
-    public static String formatTime(long mills) {
+    private static String formatTime(long mills) {
         Duration duration = Duration.ofMillis(mills);
         long minutes = duration.toMinutes();
         long secs = duration.minusMinutes(minutes).toSeconds();
@@ -128,7 +128,7 @@ public class Main {
         return String.format("%d min. %d sec. %d ms.", minutes, secs, ms);
     }
 
-    public static List<Phone> upload(String name) throws FileNotFoundException {
+    private static List<Phone> upload(String name) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(name));
         List<Phone> phones = new ArrayList<>();
         while (scanner.hasNextLine()) {
@@ -144,7 +144,7 @@ public class Main {
         return phones;
     }
 
-    public static List<String> uploadTargets(String name) throws FileNotFoundException {
+    private static List<String> uploadTargets(String name) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(name));
         List<String> targets = new ArrayList<>();
         while (scanner.hasNextLine()) {

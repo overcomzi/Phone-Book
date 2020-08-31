@@ -40,7 +40,7 @@ public class JumpSearch extends SearchAlgorithm {
         return null;
     }
 
-    public Phone backwardLinearSearch(String target, int left, int right) {
+    private Phone backwardLinearSearch(String target, int left, int right) {
         for (int i = right; i >= left; i--) {
             if (phones.get(i).getFullName().equalsIgnoreCase(target)) {
                 return phones.get(i);

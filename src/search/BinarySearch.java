@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BinarySearch extends SearchAlgorithm {
-    List<Phone> phones;
+    private List<Phone> phones;
 
     public BinarySearch(List<Phone> phones) {
         this.phones = phones;

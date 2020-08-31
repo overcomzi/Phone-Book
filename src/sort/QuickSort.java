@@ -5,10 +5,10 @@ import user.Phone;
 import java.util.List;
 
 public class QuickSort extends SortAlgorithm {
-    long duration;
-    long startTime;
-    boolean isOk;
-    boolean isWithoutDuration;
+    private long duration;
+    private long startTime;
+    private boolean isOk;
+    private boolean isWithoutDuration;
 
     @Override
     public boolean sort(List<Phone> source, long duration) {
@@ -35,7 +35,7 @@ public class QuickSort extends SortAlgorithm {
         }
     }
 
-    public int partition(List<Phone> phones, int left, int right) {
+    private int partition(List<Phone> phones, int left, int right) {
         int partitionIdx = left;
         String pivotName = phones.get(right).getFullName();
         for (int i = left; i <= right; i++) {
@@ -49,7 +49,7 @@ public class QuickSort extends SortAlgorithm {
         return partitionIdx;
     }
 
-    public void swap(List<Phone> phones, int first, int second) {
+    private void swap(List<Phone> phones, int first, int second) {
         Phone temp = phones.get(first);
         phones.set(first, phones.get(second));
         phones.set(second, temp);
