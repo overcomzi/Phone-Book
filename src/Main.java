@@ -1,7 +1,7 @@
-import search.*;
-import sort.BubbleSort;
-import sort.QuickSort;
+import search.SearchContext;
+import search.SearchType;
 import sort.SortContext;
+import sort.SortType;
 import user.Phone;
 
 import java.io.File;
@@ -22,7 +22,7 @@ public class Main {
             List<String> targets = uploadTargets(targetPath);
 
             SearchContext searchContext = new SearchContext();
-            searchContext.setSearchAlgorithm(new LinearSearch(phones));
+            searchContext.setSearchAlgorithm(SearchType.LinearSearch, phones);
             SortContext sortContext = new SortContext();
 
             System.out.println("Start searching (linear search)");
@@ -40,8 +40,8 @@ public class Main {
             //------------------------------------------------------------
 
             List<Phone> srcPhone = new ArrayList<>(phones);
-            searchContext.setSearchAlgorithm(new JumpSearch(srcPhone));
-            sortContext.setSort(new BubbleSort());
+            searchContext.setSearchAlgorithm(SearchType.JumpSearch, srcPhone);
+            sortContext.setSort(SortType.BubbleSort);
 
             System.out.println("Start searching (bubble sort + jump search)");
             startTime = System.currentTimeMillis();
@@ -51,7 +51,7 @@ public class Main {
 
             startTime = System.currentTimeMillis();
             if (isStopBubbleSort) {
-                searchContext.setSearchAlgorithm(new LinearSearch(srcPhone));
+                searchContext.setSearchAlgorithm(SearchType.LinearSearch, srcPhone);
             }
             foundPhones = searchContext.startSearch(targets);
             endTime = System.currentTimeMillis();
@@ -73,8 +73,8 @@ public class Main {
             //----------------------------------------------------
 
             srcPhone = new ArrayList<>(phones);
-            searchContext.setSearchAlgorithm(new BinarySearch(srcPhone));
-            sortContext.setSort(new QuickSort());
+            searchContext.setSearchAlgorithm(SearchType.BinarySearch, srcPhone);
+            sortContext.setSort(SortType.QuickSort);
 
             System.out.println("Start searching (quick sort + binary search)");
             startTime = System.currentTimeMillis();
@@ -98,7 +98,7 @@ public class Main {
             srcPhone = new ArrayList<>(phones);
             System.out.println("Start searching (hash table)");
             startTime = System.currentTimeMillis();
-            searchContext.setSearchAlgorithm(new HashSearch(srcPhone));
+            searchContext.setSearchAlgorithm(SearchType.HashSearch, srcPhone);
             endTime = System.currentTimeMillis();
 
             long creatingTime = endTime - startTime;
