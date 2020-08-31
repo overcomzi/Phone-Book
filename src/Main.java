@@ -13,7 +13,7 @@ import java.util.Scanner;
 //TODO: Разбить сортировку на части, константы под пути, оформить общие методы
 //TODO: Многопоточность - определение времени выполнения сортировки параллельно
 public class Main {
-    private static final String phonesPath = "directory.txt";
+    private static final String phonesPath = "shortDirectory.txt";
     private static final String targetPath = "find.txt";
 
     public static void main(String[] args) {
@@ -134,7 +134,9 @@ public class Main {
             String line = scanner.nextLine();
             String number = line.substring(0, line.indexOf(" "));
             String fullName = line.substring(line.indexOf(" ") + 1);
-            // TODO: Валидация номера и полного имени
+            if (!number.matches("\\d+")) {
+                throw new IllegalArgumentException("Несоответствие формату номера телефона");
+            }
             Phone phone = new Phone(number, fullName);
             phones.add(phone);
         }
@@ -146,7 +148,6 @@ public class Main {
         List<String> targets = new ArrayList<>();
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            // TODO: Валидация полного имени
             targets.add(line);
         }
         return targets;
