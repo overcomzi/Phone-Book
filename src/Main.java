@@ -7,9 +7,8 @@ import java.util.Scanner;
 //TODO: Разбить сортировку на части, константы под пути, оформить общие методы
 //TODO: Многопоточность - определение времени выполнения сортировки параллельно
 public class Main {
-    // На ресурсе hyperskill можно использовать лишь абсолютные пути
-    private static String phonesPath = "shortDirectory.txt",
-    targetPath = "shortFind.txtq";
+    private static String phonesPath = "directory.txt",
+                          targetPath = "find.txt";
 
     public static void main(String[] args) {
         try {
@@ -19,6 +18,9 @@ public class Main {
             SearchContext searchContext = new SearchContext();
             searchContext.setSearchAlgorithm(new LinearSearch(phones));
 
+            SortContext sortContext = new SortContext();
+
+
             System.out.println("Start searching (linear search)");
             long startTime = System.currentTimeMillis();
             List<Phone> foundPhones = searchContext.startSearch(targets);
@@ -27,6 +29,7 @@ public class Main {
             long targetQty = targets.size();
             long foundQty = foundPhones.size();
             long linearTimeTaken = endTime - startTime;
+
             String timeTaken = formatTime(linearTimeTaken);
             String output = String.format("Found %d / %d entries. Time taken: %s",
                     foundQty, targetQty, timeTaken);
@@ -34,15 +37,16 @@ public class Main {
             //------------------------------------------------------------
             List<Phone> srcPhone = copyPhones(phones);
             searchContext.setSearchAlgorithm(new JumpSearch(srcPhone));
+            sortContext.setSort(new BubbleSort());
 
             System.out.println("Start searching (bubble sort + jump search)");
             startTime = System.currentTimeMillis();
-            boolean isStopBubbleSort = bubbleSort(srcPhone, linearTimeTaken);
+            boolean isStopBubbleSort = !sortContext.startSort(srcPhone, linearTimeTaken);
             endTime = System.currentTimeMillis();
             long sortingTime = endTime - startTime;
 
             startTime = System.currentTimeMillis();
-            if (!isStopBubbleSort) {
+            if (isStopBubbleSort) {
                 searchContext.setSearchAlgorithm(new LinearSearch(srcPhone));
                 foundPhones = searchContext.startSearch(targets);
             } else {
@@ -58,17 +62,22 @@ public class Main {
             System.out.println(output);
 
             output = String.format("Sorting time: %s", formatTime(sortingTime));
-            System.out.println(output + " - STOPPED, moved to linear search");
+            if (isStopBubbleSort) {
+                System.out.println(output + " - STOPPED, moved to linear search");
+            }
 
             output = String.format("Searching time: %s", formatTime(searchingTime));
             System.out.println(output);
             //----------------------------------------------------
             srcPhone = copyPhones(phones);
             searchContext.setSearchAlgorithm(new BinarySearch(srcPhone));
+            sortContext.setSort(new QuickSort());
+
             System.out.println("Start searching (quick sort + binary search)");
             startTime = System.currentTimeMillis();
-            quickSort(srcPhone, 0, srcPhone.size() - 1);
+            sortContext.startSort(srcPhone, -1);
             endTime = System.currentTimeMillis();
+
             sortingTime = endTime - startTime;
 
             startTime = System.currentTimeMillis();
@@ -88,6 +97,7 @@ public class Main {
             output = String.format("Searching time: %s", formatTime(searchingTime));
             System.out.println(output);
             //----------------------------------------------------
+
             srcPhone = copyPhones(phones);
             System.out.println("Start searching (hash table)");
             startTime = System.currentTimeMillis();
@@ -101,12 +111,12 @@ public class Main {
             searchingTime = endTime - startTime;
 
             foundQty = foundPhones.size();
-            timeTaken = formatTime(searchingTime + sortingTime);
+            timeTaken = formatTime(searchingTime + creatingTime);
             output = String.format("Found %d / %d entries. Time taken: %s",
                     foundQty, targetQty, timeTaken);
             System.out.println(output);
 
-            output = String.format("Creating time: %s", formatTime(sortingTime));
+            output = String.format("Creating time: %s", formatTime(creatingTime));
             System.out.println(output);
 
             output = String.format("Searching time: %s", formatTime(searchingTime));
@@ -127,60 +137,7 @@ public class Main {
         }
         return copied;
     }
-    public static boolean bubbleSort(List<Phone> phones, long idolTime) {
-        long startTime = System.currentTimeMillis();
-        for (int i = 0; i < phones.size() - 1; i++) {
-            boolean isOk = true;
-            long timeTaken = System.currentTimeMillis() - startTime;
-            if (timeTaken > idolTime * 10) {
-                return false;
-            }
-            for (int k = 0; k < phones.size() - i - 1; k++) {
-                Phone curPhone = phones.get(k);
-                Phone nextPhone = phones.get(k + 1);
-                if (curPhone.getFullName().compareToIgnoreCase(
-                        nextPhone.getFullName()
-                ) >= 1) {
-                    isOk = false;
-                    phones.set(k, nextPhone);
-                    phones.set(k + 1, curPhone);
-                }
-            }
-            if (isOk) {
-                break;
-            }
-        }
 
-        return true;
-    }
-
-    public static void quickSort(List<Phone> phones, int left, int right) {
-        if (left < right) {
-            int pivot = partition(phones, left, right);
-            quickSort(phones, left, pivot - 1);
-            quickSort(phones, pivot + 1, right);
-        }
-    }
-
-    public static int partition(List<Phone> phones, int left, int right) {
-        int partitionIdx = left;
-        String pivotName = phones.get(right).getFullName();
-        for (int i = left; i <= right; i++) {
-            Phone curPhone = phones.get(i);
-            if (curPhone.getFullName().compareTo(pivotName) <= -1) {
-                swap(phones, i, partitionIdx);
-                partitionIdx++;
-            }
-        }
-        swap(phones, partitionIdx, right);
-        return partitionIdx;
-    }
-
-    public static void swap(List<Phone> phones, int first, int second) {
-        Phone temp = phones.get(first);
-        phones.set(first, phones.get(second));
-        phones.set(second, temp);
-    }
 
     public static String formatTime(long mills) {
         long minutes = ((mills / 1000) / 60) % 60;
